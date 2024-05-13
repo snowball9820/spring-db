@@ -2,6 +2,7 @@ package hellodb.jdbc.domain;
 
 import lombok.Data;
 
+//H2 Member1
 @Data
 public class Member1 {
     private String memberId;
