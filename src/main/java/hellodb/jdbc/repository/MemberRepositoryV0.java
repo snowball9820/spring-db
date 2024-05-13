@@ -1,7 +1,7 @@
 package hellodb.jdbc.repository;
 
 import hellodb.jdbc.connection.DBConnectionUtil;
-import hellodb.jdbc.domain.Member1;
+import hellodb.jdbc.domain.Member;
 import lombok.extern.slf4j.Slf4j;
 
 import java.sql.*;
@@ -11,7 +11,7 @@ import java.sql.*;
  * */
 @Slf4j
 public class MemberRepositoryV0 {
-    public Member1 save(Member1 member) throws SQLException {
+    public Member save(Member member) throws SQLException {
         ///데이터를 등록하는 insert sql
         String sql = "insert into member(member_id, money) values(?, ?)";
 
@@ -83,3 +83,5 @@ public class MemberRepositoryV0 {
     }
 
 }
+
+//ctrl+shif+t 테스트 생성
