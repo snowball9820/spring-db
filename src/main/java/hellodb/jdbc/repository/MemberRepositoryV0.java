@@ -12,7 +12,8 @@ import java.sql.*;
 @Slf4j
 public class MemberRepositoryV0 {
     public Member1 save(Member1 member) throws SQLException {
-        String sql = "insert into member(member_id,money) values(?, ?)";
+        ///데이터를 등록하는 insert sql
+        String sql = "insert into member(member_id, money) values(?, ?)";
 
         //연결용
         Connection con = null;
@@ -28,6 +29,7 @@ public class MemberRepositoryV0 {
             //values 안에 값이 들어각게 됨
             pstmt.setString(1, member.getMemberId());
             pstmt.setInt(2, member.getMoney());
+            pstmt.executeUpdate(); //쿼리가 실제 db에 실행
             return member;
         } catch (SQLException e) {
             //exception 터질 때 로그
@@ -44,6 +46,17 @@ public class MemberRepositoryV0 {
     }
 
     private void close(Connection con, Statement stmt, ResultSet rs) {
+
+        //쿼리를 종료하면 사용한 리소스들을 모두 닫음, 정리해야함
+
+        if (rs != null) {
+            try {
+                rs.close();
+            } catch (SQLException e) {
+                log.info("error", e);
+            }
+
+        }
 
         //안정성을 위해
         if (stmt != null) {
