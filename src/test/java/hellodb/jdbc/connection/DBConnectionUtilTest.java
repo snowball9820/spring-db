@@ -17,3 +17,7 @@ public class DBConnectionUtilTest {
     }
 
 }
+//h2는 org.jdbc connection을 제공해줌
+//DB가 바뀌어도 connection 획득하는 방법을 바꿀 필요 X
+//H2 전용 커넥션으로 JDBC 표준 커넥션 인터페이스인 java.sql.Connection인터페이스를 구현함
+
