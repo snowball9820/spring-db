@@ -5,8 +5,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 
 import java.sql.SQLException;
+import java.util.NoSuchElementException;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
 @Slf4j //로그찍자
 class MemberRepositoryV0Test {
@@ -31,6 +33,10 @@ class MemberRepositoryV0Test {
         Member updatedMember = repository.findById(member.getMemberId());
         assertThat(updatedMember.getMoney()).isEqualTo(20000);
 
+        //delete
+        repository.delete(member.getMemberId());
+        assertThatThrownBy(() -> repository.findById(member.getMemberId()))
+                .isInstanceOf(NoSuchElementException.class);
 
     }
 }
