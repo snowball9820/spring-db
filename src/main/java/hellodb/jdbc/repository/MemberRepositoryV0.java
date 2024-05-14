@@ -75,7 +75,7 @@ public class MemberRepositoryV0 {
 
             } else {
                 //데이터가 없을 때
-                throw new NoSuchElementException();
+                throw new NoSuchElementException("member not found memberId="+memberId);
             }
 
         } catch (SQLException e) {
