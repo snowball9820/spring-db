@@ -5,6 +5,7 @@ import hellodb.jdbc.domain.Member;
 import lombok.extern.slf4j.Slf4j;
 
 import java.sql.*;
+import java.util.NoSuchElementException;
 
 /*
  * JDBC - DriverManager 사용
@@ -26,7 +27,7 @@ public class MemberRepositoryV0 {
             //커넥션 가져옴 (ctrl+alt+M으로 뺌)
             con = getConnection();
             pstmt = con.prepareStatement(sql); //(ctrl+alt+v)
-            //values 안에 값이 들어각게 됨
+            //values 안에 값이 들어가게 됨
             pstmt.setString(1, member.getMemberId());
             pstmt.setInt(2, member.getMoney());
             pstmt.executeUpdate(); //쿼리가 실제 db에 실행
@@ -42,6 +43,45 @@ public class MemberRepositoryV0 {
             close(con, pstmt, null);
         }
 
+
+    }
+
+    //조회
+    public Member findById(String memberId) throws SQLException {
+        //member_id 조회
+        String sql = "select * from member where member_id = ?";
+
+        Connection con = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+
+        try {
+            con = getConnection();
+            //connection을 통해 prepareStatement를 얻어야함
+            pstmt = con.prepareStatement(sql);
+            //prepareStatement에 파라미터 넘겨줌
+            pstmt.setString(1,memberId);
+
+            //select query - execute update는 데이터를 변경할 때 쓰는거, executeQuery는 select할 때
+            rs = pstmt.executeQuery();
+
+            //내부에 커서가 있는데 한번은 rs.next() 호출해야 함
+            if (rs.next()) {
+                //member 객체를 만들어서 넣어줌
+                Member member = new Member();
+                member.setMemberId(rs.getString("member_id"));
+                member.setMoney(rs.getInt("money"));
+                return member;
+
+            } else {
+                //데이터가 없을 때
+                throw new NoSuchElementException();
+            }
+
+        } catch (SQLException e) {
+            log.error("db error",e);
+            throw e;
+        }
 
     }
 
@@ -84,4 +124,4 @@ public class MemberRepositoryV0 {
 
 }
 
-//ctrl+shif+t 테스트 생성
+//ctrl+shift+t 테스트 생성
