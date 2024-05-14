@@ -81,8 +81,10 @@ public class MemberRepositoryV0 {
         } catch (SQLException e) {
             log.error("db error",e);
             throw e;
-        }
+        }finally {
+            close(con, pstmt, rs);
 
+        }
     }
 
     private void close(Connection con, Statement stmt, ResultSet rs) {
