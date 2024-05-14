@@ -25,5 +25,7 @@ class MemberRepositoryV0Test {
         log.info("member==findMember {}",member==findMember);
         log.info("member equals findMember {}",member.equals(findMember));
         assertThat(findMember).isEqualTo(member);
+
+
     }
 }
